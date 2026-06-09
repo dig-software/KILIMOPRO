@@ -25,6 +25,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  package_info_plus: ^8.0.0
+  http: 1.6.0
+
 
   # Local Storage Engines (Fixed alignment)
   sqflite: ^2.3.0

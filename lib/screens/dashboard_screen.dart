@@ -3,6 +3,7 @@ import 'feeding_tracker_screen.dart';
 import 'expenses_tracker_screen.dart';
 import 'reports_screen.dart';
 import 'profile_setup_screen.dart';
+import 'weather_screen.dart'; // NEW import
 
 class DashboardScreen extends StatefulWidget {
   final UserProfile? userProfile;
@@ -34,6 +35,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
           _buildExpensesCard(),
           _buildFeedingLogCard(),
           _buildExpensesReportsCard(),
+          // NEW Weather button for mobile
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WeatherScreen()),
+                );
+              },
+              icon: const Icon(Icons.cloud),
+              label: const Text('Weather & Advisory'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.blueGrey,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -62,6 +81,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
               _buildSidebarItem('feeding log', Icons.restaurant),
               const SizedBox(height: 20),
               _buildSidebarItem('last entry/maize 200kg', Icons.info),
+              const SizedBox(height: 20),
+              // NEW Weather sidebar item
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WeatherScreen()),
+                  );
+                },
+                child: _buildSidebarItem('weather & advisory', Icons.cloud),
+              ),
             ],
           ),
         ),
@@ -70,250 +100,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Top Green Section - Weekly Summary
-                Container(
-                  color: const Color(0xFF2ECC71),
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'reports',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text(
-                          'weekly summary\navailable',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Main Blue Section - Expenses & Feeding
-                Container(
-                  color: const Color(0xFF3498DB),
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Expenses Log
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'expenses log',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'last expense:',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    'feed purchases\nmaize 2000ksh',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ExpensesTrackerScreen(),
-                                  ),
-                                );
-                              },
-                              icon: const Icon(Icons.add),
-                              label: const Text('Add Expense'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF3498DB),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      // Feeding Details
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'feeding',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'today\'s schedule:',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    'cattle: maize 50kg\npoultry: grains 20kg',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FeedingTrackerScreen(),
-                                  ),
-                                );
-                              },
-                              icon: const Icon(Icons.add),
-                              label: const Text('Log Feeding'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF3498DB),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Bottom Green Section - Reports
-                Container(
-                  color: const Color(0xFF2ECC71),
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'expenses reports',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Total Expenses (This Month)',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      'KES 15,000',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF2ECC71),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const ReportsScreen(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF2ECC71),
-                                  ),
-                                  child: const Text(
-                                    'View Details',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildWeeklySummaryCard(),
+                _buildExpensesCard(),
+                _buildFeedingLogCard(),
+                _buildExpensesReportsCard(),
               ],
             ),
           ),
@@ -569,6 +359,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           const SizedBox(height: 12),
+                    const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
@@ -713,7 +504,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // FIX: Added routing to the ReportsScreen on mobile
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -739,3 +529,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 }
+
+          

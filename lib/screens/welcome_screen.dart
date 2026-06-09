@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dashboard_screen.dart';
 import 'profile_setup_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -14,6 +15,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   final TextEditingController _emailController = TextEditingController();
   bool _isLoading = false;
   UserProfile? _userProfile;
+  String appVersion = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      appVersion = "v${info.version}";
+    });
+  }
 
   @override
   void dispose() {
@@ -288,6 +303,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 12),
+                // Version Display
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    appVersion,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -296,3 +324,4 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
+
